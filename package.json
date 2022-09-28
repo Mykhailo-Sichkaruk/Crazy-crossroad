@@ -1,17 +1,18 @@
 {
   "name": "crazy-crossroad",
   "version": "1.0.0",
-  "description": "",
   "main": "/src/indes.ts",
   "type": "module",
   "target": "es2022",
   "module": "es2022",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc && node ./built/index.js"
   },
   "author": "Mykhailo Sichkaruk",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^18.7.23",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "eslint": "^8.24.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
@@ -19,5 +20,22 @@
     "eslint-plugin-n": "^15.3.0",
     "eslint-plugin-promise": "^6.0.1",
     "typescript": "^4.8.3"
-  }
+  },
+  "dependencies": {
+    "@eslint/create-config": "^0.3.1",
+    "chalk": "^5.0.1",
+    "node": "^18.9.1"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mykhailo-Sichkaruk/Crazy-crossroad.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mykhailo-Sichkaruk/Crazy-crossroad/issues"
+  },
+  "homepage": "https://github.com/Mykhailo-Sichkaruk/Crazy-crossroad#readme",
+  "description": ""
 }
