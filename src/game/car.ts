@@ -1,20 +1,31 @@
-import { Orientation, CarLength, Coordinate } from "./../index.js";
+import { Item, Coordinate } from "./../types.js";
 
-export default class Car {
-    length: CarLength;
-    orientation: Orientation;
-    y: number;
-    x: number;
-    id: number;
-    isMain: boolean;
+export default class Car implements Item {
+    constructor (length, position, x, y, isMain = false) {
+        // Validate parameters
+        console.log(length, position, x, y);
+    
+        if (length !== 2 && length !== 3) {
+            throw new Error("Car length must be 2 or 3");
+        }
+        if (position !== "Horizontal" && position !== "Vertical") {
+            throw new Error("Car position must be Horizontal or Vertical");
+        }
+        if (x != 0 && x != 1 && x != 2 && x != 3 && x != 4 && x != 5 &&
+            y != 0 && y != 1 && y != 2 && y != 3 && y != 4 && y != 5) {
+            throw new Error("Car x and y coordinates must be integer between 0 and 5");
+        }
+        if (typeof isMain !== "boolean") {
+            throw new Error("Car isMain must be boolean");
+        }
 
-    constructor (id: number, length: CarLength, position: Orientation, x: Coordinate, y: Coordinate, isMain: boolean = false) {
+        // Set parameters
         this.length = length;
         this.orientation = position;
         this.x = x;
         this.y = y;
-        this.id = id;
         this.isMain = isMain;
+        this.isSetted = false;
     }
 
     forvard() {
