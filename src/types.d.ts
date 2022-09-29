@@ -3,23 +3,39 @@ export type Orientation = "Vertical" | "Horizontal";
 export type CarLength = 2 | 3;
 export type Coordinate = 0 | 1 | 2 | 3 | 4 | 5;
 
-export type Car = {
-        length: CarLength;
-    orientation: Orientation;
-    y: number;
-    x: number;
-    isMain: boolean;
-    isSetted: boolean;
-};
+export interface Playable{
+    items: Item[];
+    map: number[][];
+    addCar(car: Car): void;
+    getMap(): number[][];
+    getItems(): Car[];
+    moveCar(car: Car, direction: "forvard" | "back"): void;
+    getMainCar(): Car;
+    isAccesible(car: Car, direction: "forvard" | "back"): boolean;
+}
 
-export interface Item {
+
+declare interface Item {
     length: CarLength;
-    orientation: Orientation;
-    y: number;
-    x: number;
-    isMain: boolean;
-    isSetted: boolean;
-    new (length: CarLength, position: Orientation, x: Coordinate, y: Coordinate, isMain: boolean): Car;
-    forvard(): boolean;
-    back(): boolean;
+	isSettled: boolean;
+	isHorisontal: boolean;
+	y: Coordinate;
+	x: Coordinate;
+	isMain: boolean;
+	isSetted: boolean;
+	forvard(): boolean;
+	back(): boolean;
+}
+
+export type newCar = (length: CarLength, position: Orientation, x: Coordinate, y: Coordinate, isMain?: boolean) => Item;
+
+export default class Car {
+	length: CarLength;
+	orientation: Orientation;
+	y: number;
+	x: number;
+	isMain: boolean;
+	constructor(length: CarLength, position: Orientation, x: Coordinate, y: Coordinate, isMain?: boolean);
+	forvard(): false | undefined;
+	back(): false | undefined;
 }
