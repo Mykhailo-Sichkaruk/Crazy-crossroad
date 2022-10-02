@@ -1,13 +1,8 @@
-import { Item } from "../types.js";
 export default class Car {
-	constructor(game, isHorisontal = true, length, x, y, isMain = false) {
-		super();
+	constructor(game, length, x, y, isMain = false, isHorisontal = true) {
 		// Validate parameters
 		if (length !== 2 && length !== 3) {
 			throw new Error("Car length must be 2 or 3");
-		}
-		if (position !== "Horizontal" && position !== "Vertical") {
-			throw new Error("Car position must be Horizontal or Vertical");
 		}
 		if (x !== 0 && x !== 1 && x !== 2 && x !== 3 && x !== 4 && x !== 5 &&
             y !== 0 && y !== 1 && y !== 2 && y !== 3 && y !== 4 && y !== 5) {
@@ -18,16 +13,12 @@ export default class Car {
 		}
 
 		// Set parameters
-		this.length = length;
-		this.isHorisontal = isHorisontal;
 		this.x = x;
 		this.y = y;
+		this.length = length;
+		this.isHorisontal = isHorisontal;
 		this.isMain = isMain;
 		this.game = game;
-	}
-
-	settle() {
-		this.isSettled = true;
 	}
 
 	forward() {
