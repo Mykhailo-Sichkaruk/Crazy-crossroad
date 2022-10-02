@@ -1,20 +1,18 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
     "rules": {
-        "@typescript-eslint/no-unused-vars": "error",
-        "yoda": [
-            "error",
-            "never"
-        ],
         "indent": [
             "error",
             "tab"
@@ -262,28 +260,6 @@
         "template-curly-spacing": [
             "error",
             "never"
-        ],
-        "comma-dangle": [
-            "error",
-            "always-multiline"
-        ],
-        "sort-imports": [
-            "error",
-            {
-                "ignoreCase": true,
-                "ignoreDeclarationSort": true,
-                "ignoreMemberSort": false
-            }
-        ],
-        "no-unsafe-negation": [
-            "error"
-        ],
-        "no-duplicate-case": [
-            "error"
-        ],
-        "computed-property-spacing": [
-            "error",
-            "always"
-        ],
-    },
+        ]
+    }
 }
