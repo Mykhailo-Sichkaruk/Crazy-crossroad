@@ -18,10 +18,14 @@ function addShadowCar(car, game) {
 	return shadowMap;
 }
 
-const removeListeners = () => process.stdin.removeAllListeners("keypress");
-const addListeners = async game => {
-	const car = new Car(null, 2, 0, 0, true, true);
-	drawMap(addShadowCar(car, game), game);
+const removeListeners = () => {
+	process.stdin.removeAllListeners("keypress");
+	gracefullShutdown();
+};
+
+const createCarInterractive = (game, isMain) => {
+	const car = new Car(game, 2, 0, 0, Boolean(isMain), true);
+	drawMap(addShadowCar(car, game), true);
 	return new Promise(resolve => {
 		process.stdin.on("keypress", (str, key) => {
 			if (key.name === "right" || key.name === "d") {
@@ -76,7 +80,7 @@ const addListeners = async game => {
 				resolve(car);
 			} // If Escape is pressed, resolve with null
 			if (key.name === "escape") {
-				drawMap(game.map);
+				drawMap(game.map, true);
 				removeListeners();
 				resolve(null);
 			}
@@ -84,10 +88,18 @@ const addListeners = async game => {
 			if (key.ctrl && key.name === "c") {
 				process.exit();
 			}
-			drawMap(addShadowCar(car, game));
+			drawMap(addShadowCar(car, game), true);
 		});
 	});
 
 };
 
-export { addListeners, removeListeners };
+function gracefullShutdown() {
+	process.stdin.on("keypress", (str, key) => {
+		if (key.ctrl && key.name === "c") {
+			process.exit();
+		}
+	});
+}
+
+export { createCarInterractive, removeListeners };

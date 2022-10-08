@@ -1,22 +1,18 @@
-import { addListeners } from "./controller.js";
+import { createCarInterractive } from "./controller.js";
 import Game from "./game.js";
 
-let game = null;
-
-function createGameInterractive() {
-	game = new Game();
-	console.log("We are going to create a new game");
-	createCarInterractive(game);
-}
-
-async function createCarInterractive(game) {
+async function createGameInterractive() {
+	const game = new Game(null);
 	console.log("We are going to create a new car");
-	let currentCar = await addListeners(game);
-	while (currentCar !== null) {
+	let currentCar = await createCarInterractive(game, true);
+	let carCount = 0;
+	while (currentCar !== null && ++carCount <= Game.maxCarCount) {
 		game.addCar(currentCar);
-		currentCar = await addListeners(game);
+		console.log(`Car horisontal: ${game.items[carCount - 1].isHorisontal} created`);
+		currentCar = await createCarInterractive(game);
 	}
 	console.log("We are done creating cars");
+	return game;
 }
 
 export default createGameInterractive;
