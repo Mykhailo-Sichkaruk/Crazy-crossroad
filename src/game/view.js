@@ -75,7 +75,7 @@ const color = [
 	},
 	{ // 8
 		bg: "white",
-		fg: "black",
+		fg: "white",
 		state: "dim"
 	}
 ];
@@ -87,8 +87,9 @@ color[ -1 ] = {
 
 const printCar = key => `${Log[ color[ key ].state ]}${Log.bg[ color[ key ].bg ]}${Log.fg[ color[ key ].fg ]}[]${Log.reset}`;
 
-function drawMap(map) {
-	console.clear();
+function drawMap(map, clear) {
+	if (clear)
+		console.clear();
 	console.log("Use arrow keys to move the car\n\n");
 	for (const row of map) {
 		for (const cell of row) {
@@ -98,4 +99,28 @@ function drawMap(map) {
 	}
 }
 
-export { drawMap };
+async function drawWinner(winner) {
+	console.log("Winner:");
+	let state = winner;
+	const history = [];
+	while (state.parent !== null) {
+		history.push(state);
+		state = state.parent;
+	}
+
+	for (const step of history.reverse()) {
+		// Wait for 3 seconds
+		await drawAfterMs(333, step.map);
+	}
+
+}
+
+async function drawAfterMs(ms, map) {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			drawMap(map, true);
+			resolve();
+		}, ms);
+	});
+}
+export { drawMap, drawWinner };
