@@ -22,34 +22,66 @@ export default class Car {
 	}
 
 	forward() {
-		if (this.isHorisontal) {
-			if (this.game.isAccesible(this.x + 1, this.y)) {
+		if (this.isForwardAccesible()) {
+			if (this.isHorisontal) {
 				this.x++;
 				return true;
 			} else {
-				return false;
+				this.y++;
+				return true;
 			}
-		} else if (this.game.isAccesible(this.x, this.y + 1)) {
-			this.y++;
-			return true;
 		} else {
 			return false;
 		}
 	}
 
 	back() {
-		if (this.isHorisontal) {
-			if (this.game.isAccesible(this.x - 1, this.y)) {
+		if (this.isBackAccesible()) {
+			if (this.isHorisontal) {
 				this.x--;
-				return true;
 			} else {
-				return false;
+				this.y--;
 			}
-		} else if (this.game.isAccesible(this.x, this.y - 1)) {
-			this.y--;
 			return true;
 		} else {
 			return false;
 		}
 	}
+
+	isForwardAccesible() {
+		if (this.isHorisontal) {
+			return this.game.isAccesible(this.x + this.length, this.y);
+		} else {
+			return this.game.isAccesible(this.x, this.y + this.length);
+		}
+	}
+
+	isBackAccesible() {
+		if (this.isHorisontal) {
+			return this.game.isAccesible(this.x - 1, this.y);
+		} else {
+			return this.game.isAccesible(this.x, this.y - 1);
+		}
+	}
+
+	forwardNew() {
+		if (this.isForwardAccesible()) {
+			return new Car(this.game, this.length, this.x + 1, this.y, this.isMain, this.isHorisontal);
+		} else {
+			return null;
+		}
+	}
+
+	backNew() {
+		if (this.isBackAccesible()) {
+			return new Car(this.game, this.length, this.x - 1, this.y, this.isMain, this.isHorisontal);
+		} else {
+			return null;
+		}
+	}
+
+	getCopy(game) {
+		return new Car(game, this.length, this.x, this.y, this.isMain, this.isHorisontal);
+	}
+
 }
