@@ -1,6 +1,6 @@
-import { drawMap } from "./view.js";
+import { drawMap } from "../game/view.js";
 import readline from "readline";
-import Car from "./car.js";
+import Car from "../game/car.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
