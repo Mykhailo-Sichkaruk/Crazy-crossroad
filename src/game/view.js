@@ -76,7 +76,7 @@ const color = [
 	{ // 8
 		bg: "white",
 		fg: "white",
-		state: "dim"
+		state: "bright"
 	}
 ];
 color[ -1 ] = {
@@ -87,10 +87,12 @@ color[ -1 ] = {
 
 const printCar = key => `${Log[ color[ key ].state ]}${Log.bg[ color[ key ].bg ]}${Log.fg[ color[ key ].fg ]}[]${Log.reset}`;
 
-function drawMap(map, clear) {
+function drawMap(map, clear, text) {
+	map = map.map(row => row.map(cell => cell));
 	if (clear)
 		console.clear();
-	console.log("Use arrow keys to move the car\n\n");
+	if (text)
+		console.log(text);
 	for (const row of map) {
 		for (const cell of row) {
 			process.stdout.write(printCar(cell));
@@ -99,26 +101,52 @@ function drawMap(map, clear) {
 	}
 }
 
+const moveDirection = (isForward, isHorisontal) => {
+	if (isHorisontal === true) {
+		if (isForward)
+			return "right";
+		else
+			return "left";
+	} else if (isForward)
+		return "down";
+	else
+		return "up";
+};
+
+const moveFormat = move => {
+	const curretColor = color[ move.carNumber + 1 ].bg;
+	const consoleStyle = color[ move.carNumber + 1 ].state;
+	return {
+		car: `${Log.bg[curretColor]}${Log[consoleStyle]}${curretColor}${Log.reset}`,
+		move: moveDirection(move.isForward, move.isHorisontal)
+	};
+};
+function printMove(formatedMove) {
+	process.stdout.write(`\n\rCar ${formatedMove.car} moves ${formatedMove.move}\n`);
+}
+
 async function drawWinner(winner) {
-	console.log("Winner:");
 	let state = winner;
 	const history = [];
-	while (state.parent !== null) {
+	while (state !== null) {
 		history.push(state);
-		state = state.parent;
+		state = state?.parent;
 	}
 
-	for (const step of history.reverse()) {
+	console.log("\n\nStart state: ");
+	for (const state of history.reverse()) {
 		// Wait for 3 seconds
-		await drawAfterMs(333, step.map);
+		if (state.previousMove)
+			printMove(moveFormat(state.previousMove));
+		await drawAfterMs(333, state.map);
 	}
-
 }
+
 
 async function drawAfterMs(ms, map) {
 	return new Promise(resolve => {
 		setTimeout(() => {
-			drawMap(map, true);
+			drawMap(map, false);
 			resolve();
 		}, ms);
 	});

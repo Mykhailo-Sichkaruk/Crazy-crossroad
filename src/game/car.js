@@ -1,3 +1,9 @@
+/**
+ * This class represents a car.
+ * Car has a length, position in (x, y), pointer to the game and isMain flag.
+ * @class
+ * 
+ */
 export default class Car {
 	constructor(game, length, x, y, isMain = false, isHorisontal = true) {
 		// Validate parameters
@@ -25,13 +31,9 @@ export default class Car {
 		if (this.isForwardAccesible()) {
 			if (this.isHorisontal) {
 				this.x++;
-				return true;
 			} else {
 				this.y++;
-				return true;
 			}
-		} else {
-			return false;
 		}
 	}
 
@@ -42,9 +44,6 @@ export default class Car {
 			} else {
 				this.y--;
 			}
-			return true;
-		} else {
-			return false;
 		}
 	}
 
@@ -61,22 +60,6 @@ export default class Car {
 			return this.game.isAccesible(this.x - 1, this.y);
 		} else {
 			return this.game.isAccesible(this.x, this.y - 1);
-		}
-	}
-
-	forwardNew() {
-		if (this.isForwardAccesible()) {
-			return new Car(this.game, this.length, this.x + 1, this.y, this.isMain, this.isHorisontal);
-		} else {
-			return null;
-		}
-	}
-
-	backNew() {
-		if (this.isBackAccesible()) {
-			return new Car(this.game, this.length, this.x - 1, this.y, this.isMain, this.isHorisontal);
-		} else {
-			return null;
 		}
 	}
 
